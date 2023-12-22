@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: gofood-backend
-        image: tashdidalam/gofood-backend:30
+        image: nafiursan/mern:latest
         imagePullPolicy: Always
         resources:
           limits:

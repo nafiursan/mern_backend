@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gofood-backend-deployment
+spec:
+  replicas: 1  # Adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: gofood-backend
+  template:
+    metadata:
+      labels:
+        app: gofood-backend
+    spec:
+      containers:
+      - name: gofood-backend
+        image: tashdidalam/gofood-backend:30
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 5000  # Replace with the port your backend application listens on
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gofood-backend-service
+spec:
+  selector:
+    app: gofood-backend
+  ports:
+    - protocol: TCP
+      port: 5000  # Use the same port that your backend application listens on
+      targetPort: 5000
+  type: ClusterIP

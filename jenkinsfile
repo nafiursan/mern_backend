@@ -1,0 +1,74 @@
+pipeline {
+    agent any
+
+    stages {
+        
+        //clone the repo
+        stage('Git Clone') {
+            steps {
+                // Clone the Git repository
+                git branch: 'main', url: 'https://github.com/nafiursan/mern_frontend.git'
+            }
+        }
+        //======================
+        // stage('Create Docker Image') {
+        //     steps {
+        //           script {
+        //         // 
+        //         docker.build("nafiursan/mern-frontend:latest")
+        //           }
+                
+        //     }
+        // }
+        //=================
+ 
+
+  
+        //=================
+        //         stage('Push to Dockerhub') {
+        //     steps {
+        //           script {
+        //          withDockerRegistry(credentialsId: 'dockerhub') {
+        //         def imageName = "nafiursan/mern-frontend:latest"
+        //         docker.image(imageName).push()
+        //           }
+                
+        //     }
+        // }
+        
+        // }
+        //=========
+
+               stage('deploy k8s') {
+            steps {
+    withCredentials([file(credentialsId: 'kube', variable: 'kubeconfig')]) {
+script {
+       //sh 'kubectl config view'
+                    //   echo 'Printing kubectl version:'
+                    // sh 'kubectl version'
+                    
+                    echo 'Printing kubectl get nodes output:'
+                    sh 'kubectl get nodes'
+
+                        // sh 'echo "=== Printing Kubeconfig ==="'
+                        //   sh 'pwd'
+                                //   sh 'sudo -u nafiur -c "who"'
+
+                        // sh 'sudo -u nafiur minikube status'
+                         //sh 'cat $kubeconfig'
+                        
+     
+
+                    }
+   
+    }
+    
+            }}
+
+        //=========
+        
+        
+    
+        
+   }     
+}  
